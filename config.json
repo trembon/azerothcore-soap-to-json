@@ -1,0 +1,11 @@
+{
+    "server":{
+        "port": 3000
+    },
+    "soap":{
+        "address": "10.33.233.4",
+        "port": 7878,
+        "username": "api",
+        "password": "homepage"
+    }
+}
