@@ -14,7 +14,6 @@ try {
     process.exit();
 }
 
-
 app.get('/', (req, res) => {
     res.json([
         {
@@ -26,16 +25,18 @@ app.get('/', (req, res) => {
 });
 
 const rg_revision = new RegExp(/rev\. ([a-z0-9]*) \d{4}/, "gm");
+const rg_revisionDate = new RegExp(/rev\. [a-z0-9]* ([0-9]{4}-[0-9]{2}-[0-9]{2}) [0-9]{2}/, "gm");
 const rg_connectedPlayers = new RegExp(/Connected players: ([0-9]*)\./, "gm");
 app.get('/status', async (req, res) => {
     var response = await CallAzerothCore("server info", config);
-    console.log("status response", response);
 
     const rev = rg_revision.exec(response.result);
+    const revDate = rg_revisionDate.exec(response.result);
     const players = rg_connectedPlayers.exec(response.result);
 
     res.json({
         "revision": rev[1],
+        "revisionDate": revDate[1],
         "connectedPlayers": parseInt(players[1])
     });
 });
